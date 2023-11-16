@@ -1,0 +1,34 @@
+config:
+  credentials_id: CERNERASP_SVC
+
+remote_groups:
+  remote_group_1:
+    - name: ljc3podev01
+      host: ljc3podev01.cernerasp.com
+    - name: ljc3podev03
+      host: ljc3podev03.cernerasp.com
+  remote_group_2:
+      - name: ljc3podev01
+        host: ljc3podev01.cernerasp.com
+
+command_groups:
+  command_group_1:
+    - commands:
+        - 'sudo cat /app/learning_portal_env/docker-compose.yml'
+        - 'sudo docker-compose -f /app/learning_portal_env/docker-compose.yml pull'
+        - 'sudo docker service ls'
+  command_group_2:
+    - commands:
+        - 'sudo docker stack deploy --compose-file /app/learning_portal_env/docker-compose.yml lj'
+        - 'sudo docker service ls'
+
+steps:
+  deploy:
+    - remote_groups:
+        - remote_group_1
+      command_groups:
+        - command_group_1
+    - remote_groups:
+        - remote_group_2
+      command_groups:
+        - command_group_2

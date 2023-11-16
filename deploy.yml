@@ -1,0 +1,62 @@
+config:
+  credentials_id: NP076476
+
+remote_groups:
+  remote_group_1:
+    - name: c3podev
+      host: c3podev.northamerica.cerner.net
+    - name: C3PODEV01
+      host: C3PODEV01.northamerica.cerner.net
+    - name: C3PODEV02
+      host: C3PODEV02.northamerica.cerner.net
+    - name: C3PODEV01
+      host: C3PODEV01.northamerica.cerner.net
+    - name: C3PODEV02
+      host: C3PODEV02.northamerica.cerner.net
+  remote_group_2:
+    - name: ljc3podev01
+      host: ljc3podev01.cernerasp.com
+    - name: ljc3podev02
+      host: ljc3podev02.cernerasp.com
+    - name: ljc3podev03
+      host: ljc3podev03.cernerasp.com
+    - name: ljc3podev04
+      host: ljc3podev04.cernerasp.com
+  remote_group_3:
+    - name: cernclmzk001
+      host: cernclmzk001.northamerica.cerner.net
+    - name: cernclmkafka001
+      host: cernclmkafka001.northamerica.cerner.net
+
+command_groups:
+  command_group_1:
+    - commands:
+        - 'ls -lrt'
+        - 'df -Ph'
+        - 'service zabbix-agent status'
+    - scripts:
+        - 'test.sh'
+  command_group_2:
+    - commands:
+       - 'rpm -qa |grep kernel'
+       - 'uname -r'
+       - 'yum list kernel-devel'
+  command_group_3:
+    - commands:
+       - 'uname -r'
+       - 'yum list kernel-devel'
+
+steps:
+  deploy:
+    - remote_groups:
+        - remote_group_1
+      command_groups:
+        - command_group_1
+    - remote_groups:
+        - remote_group_2
+      command_groups:
+        - command_group_2
+    - remote_groups:
+        - remote_group_3
+      command_groups:
+        - command_group_3
